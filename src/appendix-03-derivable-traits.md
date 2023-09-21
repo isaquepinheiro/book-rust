@@ -1,40 +1,22 @@
-## Appendix C: Derivable Traits
+## Apêndice C: Traits Deriváveis
 
-In various places in the book, we’ve discussed the `derive` attribute, which
-you can apply to a struct or enum definition. The `derive` attribute generates
-code that will implement a trait with its own default implementation on the
-type you’ve annotated with the `derive` syntax.
+Em vários lugares do livro, discutimos o atributo `derive`, que você pode aplicar a uma definição de struct ou enum. O atributo `derive` gera código que implementará um trait com sua própria implementação padrão no tipo que você anotou com a sintaxe `derive`.
 
-In this appendix, we provide a reference of all the traits in the standard
-library that you can use with `derive`. Each section covers:
+Neste apêndice, fornecemos uma referência de todos os traits na biblioteca padrão que você pode usar com `derive`. Cada seção aborda:
 
-* What operators and methods deriving this trait will enable
-* What the implementation of the trait provided by `derive` does
-* What implementing the trait signifies about the type
-* The conditions in which you’re allowed or not allowed to implement the trait
-* Examples of operations that require the trait
+* Quais operadores e métodos derivar esse trait habilitará
+* O que a implementação do trait fornecida pelo `derive` faz
+* O que implementar o trait significa sobre o tipo
+* As condições em que você está autorizado ou não a implementar o trait
+* Exemplos de operações que requerem o trait
 
-If you want different behavior from that provided by the `derive` attribute,
-consult the [standard library documentation](../std/index.html)<!-- ignore -->
-for each trait for details of how to manually implement them.
+Se você deseja um comportamento diferente do fornecido pelo atributo `derive`, consulte a [documentação da biblioteca padrão](../std/index.html) para cada trait para obter detalhes sobre como implementá-los manualmente.
 
-These traits listed here are the only ones defined by the standard library that
-can be implemented on your types using `derive`. Other traits defined in the
-standard library don’t have sensible default behavior, so it’s up to you to
-implement them in the way that makes sense for what you’re trying to accomplish.
+Os traits listados aqui são os únicos definidos pela biblioteca padrão que podem ser implementados em seus tipos usando `derive`. Outros traits definidos na biblioteca padrão não têm comportamento padrão sensato, então cabe a você implementá-los da maneira que fizer sentido para o que você está tentando realizar.
 
-An example of a trait that can’t be derived is `Display`, which handles
-formatting for end users. You should always consider the appropriate way to
-display a type to an end user. What parts of the type should an end user be
-allowed to see? What parts would they find relevant? What format of the data
-would be most relevant to them? The Rust compiler doesn’t have this insight, so
-it can’t provide appropriate default behavior for you.
+Um exemplo de um trait que não pode ser derivado é o `Display`, que lida com a formatação para usuários finais. Você sempre deve considerar a maneira apropriada de exibir um tipo para um usuário final. Quais partes do tipo um usuário final deve ser autorizado a ver? Quais partes eles acham relevantes? Qual formato dos dados seria mais relevante para eles? O compilador Rust não tem essa visão, portanto, não pode fornecer um comportamento padrão apropriado para você.
 
-The list of derivable traits provided in this appendix is not comprehensive:
-libraries can implement `derive` for their own traits, making the list of
-traits you can use `derive` with truly open-ended. Implementing `derive`
-involves using a procedural macro, which is covered in the
-[“Macros”][macros]<!-- ignore --> section of Chapter 19.
+A lista de traits deriváveis fornecida neste apêndice não é abrangente: as bibliotecas podem implementar `derive` para seus próprios traits, tornando a lista de traits com os quais você pode usar `derive` verdadeiramente ilimitada. Implementar `derive` envolve o uso de uma macro procedural, que é abordada na seção [“Macros”][macros] do Capítulo 19.
 
 ### `Debug` for Programmer Output
 

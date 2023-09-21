@@ -170,9 +170,9 @@ Tabela B-9 mostra os contextos nos quais as chaves são usadas.
 | `{...}` | Expressão de bloco|
 | `Type {...}` | `struct` Literal |
 
-Table B-10 shows the contexts in which square brackets are used.
+Tabela B-10 mostra os contextos em que colchetes quadrados são usados.
 
-<span class="caption">Table B-10: Square Brackets</span>
+<span class="caption">Tabela B-10: Colchetes Quadrados</span>
 
 | Contexto | Explicação |
 |----------|------------|
