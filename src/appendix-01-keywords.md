@@ -1,11 +1,6 @@
-## Appendix A: Keywords
+## Apêndice A: Palavras-chave
 
-The following list contains keywords that are reserved for current or future
-use by the Rust language. As such, they cannot be used as identifiers (except
-as raw identifiers as we’ll discuss in the “[Raw
-Identifiers][raw-identifiers]<!-- ignore -->” section). Identifiers are names
-of functions, variables, parameters, struct fields, modules, crates, constants,
-macros, static values, attributes, types, traits, or lifetimes.
+A lista a seguir contém palavras-chave que são reservadas para uso atual ou futuro pela linguagem Rust. Como tal, elas não podem ser usadas como identificadores (exceto como identificadores brutos, como discutiremos na seção "[Identificadores brutos][raw-identifiers]<!-- ignore -->"). Identificadores são nomes de funções, variáveis, parâmetros, campos de estrutura, módulos, crates, constantes, macros, valores estáticos, atributos, tipos, traits ou lifetimes.
 
 [raw-identifiers]: #raw-identifiers
 
