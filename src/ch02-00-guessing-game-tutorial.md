@@ -372,14 +372,11 @@ Please input your guess.
 You guessed: 5
 ```
 
-You should get different random numbers, and they should all be numbers between
-1 and 100. Great job!
+Você deve obter números aleatórios diferentes, e todos eles devem estar entre 1 e 100. Ótimo trabalho!
 
-## Comparing the Guess to the Secret Number
+## Comparando o Palpite com o Número Secreto
 
-Now that we have user input and a random number, we can compare them. That step
-is shown in Listing 2-4. Note that this code won’t compile just yet, as we will
-explain.
+Agora que temos a entrada do usuário e um número aleatório, podemos compará-los. Esse passo é mostrado no Exemplo 2-4. Observe que este código ainda não irá compilar, como explicaremos.
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -387,47 +384,19 @@ explain.
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-04/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 2-4: Handling the possible return values of
-comparing two numbers</span>
+<span class="caption">Listagem 2-4: Tratando os possíveis valores de retorno ao comparar dois números</span>
 
-First we add another `use` statement, bringing a type called
-`std::cmp::Ordering` into scope from the standard library. The `Ordering` type
-is another enum and has the variants `Less`, `Greater`, and `Equal`. These are
-the three outcomes that are possible when you compare two values.
+Primeiro, adicionamos mais uma declaração `use`, trazendo um tipo chamado `std::cmp::Ordering` para o escopo da biblioteca padrão. O tipo `Ordering` é outro enum e possui as variantes `Less` (Menor), `Greater` (Maior) e `Equal` (Igual). Esses são os três resultados possíveis ao comparar dois valores.
 
-Then we add five new lines at the bottom that use the `Ordering` type. The
-`cmp` method compares two values and can be called on anything that can be
-compared. It takes a reference to whatever you want to compare with: here it’s
-comparing `guess` to `secret_number`. Then it returns a variant of the
-`Ordering` enum we brought into scope with the `use` statement. We use a
-[`match`][match]<!-- ignore --> expression to decide what to do next based on
-which variant of `Ordering` was returned from the call to `cmp` with the values
-in `guess` and `secret_number`.
+Em seguida, adicionamos cinco novas linhas na parte inferior que utilizam o tipo `Ordering`. O método `cmp` compara dois valores e pode ser chamado em qualquer coisa que possa ser comparada. Ele recebe uma referência ao que você deseja comparar: aqui, estamos comparando `guess` com `secret_number`. Em seguida, ele retorna uma variante do enum `Ordering` que trouxemos para o escopo com a declaração `use`. Usamos uma expressão [`match`][match]<!-- ignore --> para decidir o que fazer em seguida, com base na variante de `Ordering` que foi retornada pela chamada a `cmp` com os valores em `guess` e `secret_number`.
 
-A `match` expression is made up of *arms*. An arm consists of a *pattern* to
-match against, and the code that should be run if the value given to `match`
-fits that arm’s pattern. Rust takes the value given to `match` and looks
-through each arm’s pattern in turn. Patterns and the `match` construct are
-powerful Rust features: they let you express a variety of situations your code
-might encounter and they make sure you handle them all. These features will be
-covered in detail in Chapter 6 and Chapter 18, respectively.
+Uma expressão `match` é composta por *ramificações* (*arms*). Uma ramificação consiste em um *padrão* a ser correspondido e o código que deve ser executado se o valor fornecido à `match` se encaixar no padrão dessa ramificação. Rust pega o valor fornecido à `match` e verifica cada padrão de ramificação sequencialmente. Os padrões e a construção `match` são recursos poderosos do Rust: eles permitem que você expresse uma variedade de situações que seu código pode encontrar e garantem que você as trate todas. Esses recursos serão detalhadamente abordados no Capítulo 6 e no Capítulo 18, respectivamente.
 
-Let’s walk through an example with the `match` expression we use here. Say that
-the user has guessed 50 and the randomly generated secret number this time is
-38.
+Vamos dar uma olhada em um exemplo com a expressão `match` que usamos aqui. Suponha que o usuário tenha adivinhado 50 e o número secreto gerado aleatoriamente desta vez seja 38.
 
-When the code compares 50 to 38, the `cmp` method will return
-`Ordering::Greater` because 50 is greater than 38. The `match` expression gets
-the `Ordering::Greater` value and starts checking each arm’s pattern. It looks
-at the first arm’s pattern, `Ordering::Less`, and sees that the value
-`Ordering::Greater` does not match `Ordering::Less`, so it ignores the code in
-that arm and moves to the next arm. The next arm’s pattern is
-`Ordering::Greater`, which *does* match `Ordering::Greater`! The associated
-code in that arm will execute and print `Too big!` to the screen. The `match`
-expression ends after the first successful match, so it won’t look at the last
-arm in this scenario.
+Quando o código compara 50 com 38, o método `cmp` retornará `Ordering::Greater` porque 50 é maior que 38. A expressão `match` recebe o valor `Ordering::Greater` e começa a verificar os padrões de cada ramificação. Ela olha para o padrão da primeira ramificação, `Ordering::Less`, e percebe que o valor `Ordering::Greater` não corresponde a `Ordering::Less`, então ela ignora o código nessa ramificação e passa para a próxima. O padrão da próxima ramificação é `Ordering::Greater`, que *corresponde* a `Ordering::Greater`! O código associado a essa ramificação será executado e imprimirá `Muito grande!` na tela. A expressão `match` termina após o primeiro casamento bem-sucedido, portanto, não examinará a última ramificação neste cenário.
 
-However, the code in Listing 2-4 won’t compile yet. Let’s try it:
+No entanto, o código na Listagem 2-4 ainda não será compilado. Vamos tentar:
 
 <!--
 The error numbers in this output should be that of the code **WITHOUT** the
@@ -438,20 +407,9 @@ anchor or snip comments
 {{#include ../listings/ch02-guessing-game-tutorial/listing-02-04/output.txt}}
 ```
 
-The core of the error states that there are *mismatched types*. Rust has a
-strong, static type system. However, it also has type inference. When we wrote
-`let mut guess = String::new()`, Rust was able to infer that `guess` should be
-a `String` and didn’t make us write the type. The `secret_number`, on the other
-hand, is a number type. A few of Rust’s number types can have a value between 1
-and 100: `i32`, a 32-bit number; `u32`, an unsigned 32-bit number; `i64`, a
-64-bit number; as well as others. Unless otherwise specified, Rust defaults to
-an `i32`, which is the type of `secret_number` unless you add type information
-elsewhere that would cause Rust to infer a different numerical type. The reason
-for the error is that Rust cannot compare a string and a number type.
+O core do erro indica que há *tipos incompatíveis*. Rust possui um sistema de tipos forte e estático. No entanto, também possui inferência de tipos. Quando escrevemos `let mut guess = String::new()`, Rust conseguiu inferir que `guess` deveria ser uma `String` e não nos obrigou a escrever o tipo. O `secret_number`, por outro lado, é um tipo numérico. Alguns dos tipos numéricos em Rust podem ter um valor entre 1 e 100: `i32`, um número de 32 bits; `u32`, um número sem sinal de 32 bits; `i64`, um número de 64 bits; bem como outros. A menos que seja especificado de outra forma, Rust assume por padrão um `i32`, que é o tipo de `secret_number` a menos que você adicione informações de tipo em outro lugar que façam Rust inferir um tipo numérico diferente. O motivo do erro é que Rust não pode comparar uma string e um tipo numérico.
 
-Ultimately, we want to convert the `String` the program reads as input into a
-real number type so we can compare it numerically to the secret number. We do
-so by adding this line to the `main` function body:
+Em última análise, queremos converter a `String` que o programa lê como entrada em um tipo numérico real para que possamos compará-lo numericamente com o número secreto. Fazemos isso adicionando esta linha ao corpo da função `main`:
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -459,60 +417,23 @@ so by adding this line to the `main` function body:
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-03-convert-string-to-number/src/main.rs:here}}
 ```
 
-The line is:
+A linha é:
 
 ```rust,ignore
 let guess: u32 = guess.trim().parse().expect("Please type a number!");
 ```
 
-We create a variable named `guess`. But wait, doesn’t the program already have
-a variable named `guess`? It does, but helpfully Rust allows us to shadow the
-previous value of `guess` with a new one. *Shadowing* lets us reuse the `guess`
-variable name rather than forcing us to create two unique variables, such as
-`guess_str` and `guess`, for example. We’ll cover this in more detail in
-[Chapter 3][shadowing]<!-- ignore -->, but for now, know that this feature is
-often used when you want to convert a value from one type to another type.
+Criamos uma variável chamada `guess`. Mas espere, o programa já não tem uma variável chamada `guess`? De fato, tem, mas de forma útil, o Rust nos permite sombrear o valor anterior de `guess` com um novo. *Sombrear* nos permite reutilizar o nome da variável `guess` em vez de nos forçar a criar duas variáveis únicas, como `guess_str` e `guess`, por exemplo. Abordaremos isso com mais detalhes no [Capítulo 3][shadowing]<!-- ignore -->, mas por agora, saiba que esse recurso é frequentemente usado quando você deseja converter um valor de um tipo para outro.
 
-We bind this new variable to the expression `guess.trim().parse()`. The `guess`
-in the expression refers to the original `guess` variable that contained the
-input as a string. The `trim` method on a `String` instance will eliminate any
-whitespace at the beginning and end, which we must do to be able to compare the
-string to the `u32`, which can only contain numerical data. The user must press
-<span class="keystroke">enter</span> to satisfy `read_line` and input their
-guess, which adds a newline character to the string. For example, if the user
-types <span class="keystroke">5</span> and presses <span
-class="keystroke">enter</span>, `guess` looks like this: `5\n`. The `\n`
-represents “newline.” (On Windows, pressing <span
-class="keystroke">enter</span> results in a carriage return and a newline,
-`\r\n`.) The `trim` method eliminates `\n` or `\r\n`, resulting in just `5`.
+Ligamos essa nova variável à expressão `guess.trim().parse()`. O `guess` na expressão se refere ao `guess` original que continha a entrada como uma string. O método `trim` em uma instância de `String` eliminará qualquer espaço em branco no início e no final, o que precisamos fazer para poder comparar a string com o `u32`, que só pode conter dados numéricos. O usuário deve pressionar <span class="keystroke">enter</span> para atender ao `read_line` e inserir sua suposição, o que adiciona um caractere de nova linha à string. Por exemplo, se o usuário digitar <span class="keystroke">5</span> e pressionar <span class="keystroke">enter</span>, `guess` ficará assim: `5\n`. O `\n` representa "nova linha". (No Windows, pressionar <span class="keystroke">enter</span> resulta em um retorno de carro e uma nova linha, `\r\n`). O método `trim` elimina `\n` ou `\r\n`, resultando apenas em `5`.
 
-The [`parse` method on strings][parse]<!-- ignore --> converts a string to
-another type. Here, we use it to convert from a string to a number. We need to
-tell Rust the exact number type we want by using `let guess: u32`. The colon
-(`:`) after `guess` tells Rust we’ll annotate the variable’s type. Rust has a
-few built-in number types; the `u32` seen here is an unsigned, 32-bit integer.
-It’s a good default choice for a small positive number. You’ll learn about
-other number types in [Chapter 3][integers]<!-- ignore -->.
+O método [`parse` em strings][parse]<!-- ignore --> converte uma string em outro tipo. Aqui, o usamos para converter de uma string para um número. Precisamos informar ao Rust o tipo exato de número que desejamos usando `let guess: u32`. Os dois pontos (`:`) após `guess` informam ao Rust que vamos anotar o tipo da variável. Rust possui alguns tipos numéricos integrados; o `u32` visto aqui é um inteiro sem sinal de 32 bits. É uma boa escolha padrão para um número pequeno e positivo. Você aprenderá sobre outros tipos numéricos no [Capítulo 3][integers]<!-- ignore -->.
 
-Additionally, the `u32` annotation in this example program and the comparison
-with `secret_number` means Rust will infer that `secret_number` should be a
-`u32` as well. So now the comparison will be between two values of the same
-type!
+Além disso, a anotação `u32` neste exemplo de programa e a comparação com `secret_number` significam que o Rust inferirá que `secret_number` também deve ser um `u32`. Portanto, agora a comparação será entre dois valores do mesmo tipo!
 
-The `parse` method will only work on characters that can logically be converted
-into numbers and so can easily cause errors. If, for example, the string
-contained `A👍%`, there would be no way to convert that to a number. Because it
-might fail, the `parse` method returns a `Result` type, much as the `read_line`
-method does (discussed earlier in [“Handling Potential Failure with
-`Result`”](#handling-potential-failure-with-result)<!-- ignore-->). We’ll treat
-this `Result` the same way by using the `expect` method again. If `parse`
-returns an `Err` `Result` variant because it couldn’t create a number from the
-string, the `expect` call will crash the game and print the message we give it.
-If `parse` can successfully convert the string to a number, it will return the
-`Ok` variant of `Result`, and `expect` will return the number that we want from
-the `Ok` value.
+O método `parse` funcionará apenas em caracteres que podem ser logicamente convertidos em números e, portanto, pode facilmente causar erros. Se, por exemplo, a string contiver `A👍%`, não haverá como convertê-la em um número. Como pode falhar, o método `parse` retorna um tipo `Result`, assim como o método `read_line` faz (discutido anteriormente em ["Manejando Possíveis Falhas com `Result`"](##handling-potential-failure-with-result)<!-- ignore -->). Trataremos esse `Result` da mesma maneira, usando o método `expect` novamente. Se `parse` retornar uma variante `Err` de `Result` porque não pôde criar um número a partir da string, a chamada `expect` interromperá o jogo e imprimirá a mensagem que fornecemos. Se `parse` conseguir converter com sucesso a string em um número, ele retornará a variante `Ok` de `Result`, e `expect` retornará o número que desejamos a partir do valor `Ok`.
 
-Let’s run the program now:
+Vamos executar o programa agora:
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial/no-listing-03-convert-string-to-number/
@@ -533,18 +454,13 @@ You guessed: 76
 Too big!
 ```
 
-Nice! Even though spaces were added before the guess, the program still figured
-out that the user guessed 76. Run the program a few times to verify the
-different behavior with different kinds of input: guess the number correctly,
-guess a number that is too high, and guess a number that is too low.
+Ótimo! Mesmo que espaços tenham sido adicionados antes da suposição, o programa ainda conseguiu determinar que o usuário adivinhou 76. Execute o programa algumas vezes para verificar o comportamento diferente com diferentes tipos de entrada: adivinhe o número corretamente, adivinhe um número muito alto e adivinhe um número muito baixo.
 
-We have most of the game working now, but the user can make only one guess.
-Let’s change that by adding a loop!
+Agora, a maior parte do jogo está funcionando, mas o usuário só pode fazer uma suposição. Vamos mudar isso adicionando um loop!
 
-## Allowing Multiple Guesses with Looping
+## Permitindo Múltiplas Suposições com Looping
 
-The `loop` keyword creates an infinite loop. We’ll add a loop to give users
-more chances at guessing the number:
+A palavra-chave `loop` cria um loop infinito. Vamos adicionar um loop para dar aos usuários mais chances de adivinhar o número:
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -552,17 +468,9 @@ more chances at guessing the number:
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-04-looping/src/main.rs:here}}
 ```
 
-As you can see, we’ve moved everything from the guess input prompt onward into
-a loop. Be sure to indent the lines inside the loop another four spaces each
-and run the program again. The program will now ask for another guess forever,
-which actually introduces a new problem. It doesn’t seem like the user can quit!
+Como você pode ver, movemos tudo, desde a solicitação de entrada da suposição em diante, para um loop. Certifique-se de recuar as linhas dentro do loop com mais quatro espaços cada e execute o programa novamente. Agora, o programa solicitará outra suposição indefinidamente, o que na verdade introduz um novo problema. Parece que o usuário não pode sair!
 
-The user could always interrupt the program by using the keyboard shortcut
-<span class="keystroke">ctrl-c</span>. But there’s another way to escape this
-insatiable monster, as mentioned in the `parse` discussion in [“Comparing the
-Guess to the Secret Number”](#comparing-the-guess-to-the-secret-number)<!--
-ignore -->: if the user enters a non-number answer, the program will crash. We
-can take advantage of that to allow the user to quit, as shown here:
+O usuário sempre pode interromper o programa usando o atalho do teclado <span class="keystroke">ctrl-c</span>. Mas existe outra maneira de escapar desse monstro insaciável, como mencionado na discussão sobre `parse` em [“Comparando a Suposição com o Número Secreto”](#comparing-the-guess-to-the-secret-number)<!-- ignore -->: se o usuário inserir uma resposta que não seja um número, o programa irá travar. Podemos aproveitar isso para permitir que o usuário saia, como mostrado aqui:
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial/no-listing-04-looping/
@@ -598,13 +506,11 @@ thread 'main' panicked at 'Please type a number!: ParseIntError { kind: InvalidD
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
-Typing `quit` will quit the game, but as you’ll notice, so will entering any
-other non-number input. This is suboptimal, to say the least; we want the game
-to also stop when the correct number is guessed.
+Digitar `quit` encerrará o jogo, mas, como você perceberá, qualquer outra entrada que não seja um número também encerrará o jogo. Isso está longe de ser ideal; queremos que o jogo pare quando o número correto for adivinhado.
 
-### Quitting After a Correct Guess
+### Saindo Após um Palpite Correto
 
-Let’s program the game to quit when the user wins by adding a `break` statement:
+Vamos programar o jogo para sair quando o usuário vencer, adicionando uma declaração `break`:
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -612,16 +518,11 @@ Let’s program the game to quit when the user wins by adding a `break` statemen
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/no-listing-05-quitting/src/main.rs:here}}
 ```
 
-Adding the `break` line after `You win!` makes the program exit the loop when
-the user guesses the secret number correctly. Exiting the loop also means
-exiting the program, because the loop is the last part of `main`.
+Adicionar a linha `break` após `Você venceu!` faz com que o programa saia do loop quando o usuário adivinha o número secreto corretamente. Sair do loop também significa sair do programa, porque o loop é a última parte da função `main`.
 
-### Handling Invalid Input
+### Lidando com Entradas Inválidas
 
-To further refine the game’s behavior, rather than crashing the program when
-the user inputs a non-number, let’s make the game ignore a non-number so the
-user can continue guessing. We can do that by altering the line where `guess`
-is converted from a `String` to a `u32`, as shown in Listing 2-5.
+Para refinar ainda mais o comportamento do jogo, em vez de fazer o programa travar quando o usuário inserir algo que não seja um número, vamos fazer o jogo ignorar entrada não numérica para que o usuário possa continuar adivinhando. Podemos fazer isso alterando a linha em que `guess` é convertido de uma `String` para um `u32`, conforme mostrado na Listagem 2-5.
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -629,32 +530,15 @@ is converted from a `String` to a `u32`, as shown in Listing 2-5.
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-05/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 2-5: Ignoring a non-number guess and asking for
-another guess instead of crashing the program</span>
+<span class="caption">Listagem 2-5: Ignorando uma suposição que não é um número e pedindo outra suposição em vez de travar o programa</span>
 
-We switch from an `expect` call to a `match` expression to move from crashing
-on an error to handling the error. Remember that `parse` returns a `Result`
-type and `Result` is an enum that has the variants `Ok` and `Err`. We’re using
-a `match` expression here, as we did with the `Ordering` result of the `cmp`
-method.
+Mudamos de uma chamada `expect` para uma expressão `match` para passar de um travamento em caso de erro para o tratamento do erro. Lembre-se de que `parse` retorna um tipo `Result`, e `Result` é um enum que possui as variantes `Ok` e `Err`. Estamos usando uma expressão `match` aqui, assim como fizemos com o resultado `Ordering` do método `cmp`.
 
-If `parse` is able to successfully turn the string into a number, it will
-return an `Ok` value that contains the resultant number. That `Ok` value will
-match the first arm’s pattern, and the `match` expression will just return the
-`num` value that `parse` produced and put inside the `Ok` value. That number
-will end up right where we want it in the new `guess` variable we’re creating.
+Se `parse` conseguir transformar com sucesso a string em um número, ele retornará um valor `Ok` que contém o número resultante. Esse valor `Ok` corresponderá ao padrão da primeira ramificação, e a expressão `match` simplesmente retornará o valor `num` que `parse` produziu e colocou dentro do valor `Ok`. Esse número acabará exatamente onde queremos, na nova variável `guess` que estamos criando.
 
-If `parse` is *not* able to turn the string into a number, it will return an
-`Err` value that contains more information about the error. The `Err` value
-does not match the `Ok(num)` pattern in the first `match` arm, but it does
-match the `Err(_)` pattern in the second arm. The underscore, `_`, is a
-catchall value; in this example, we’re saying we want to match all `Err`
-values, no matter what information they have inside them. So the program will
-execute the second arm’s code, `continue`, which tells the program to go to the
-next iteration of the `loop` and ask for another guess. So, effectively, the
-program ignores all errors that `parse` might encounter!
+Se `parse` *não* conseguir transformar a string em um número, ele retornará um valor `Err` que contém mais informações sobre o erro. O valor `Err` não corresponde ao padrão `Ok(num)` na primeira ramificação do `match`, mas corresponde ao padrão `Err(_)` na segunda ramificação. O sublinhado, `_`, é um valor curinga; neste exemplo, estamos dizendo que queremos corresponder a todos os valores `Err`, não importa que informações eles contenham. Portanto, o programa executará o código da segunda ramificação, `continue`, que indica ao programa para ir para a próxima iteração do `loop` e pedir outra suposição. Portanto, efetivamente, o programa ignora todos os erros que `parse` possa encontrar!
 
-Now everything in the program should work as expected. Let’s try it:
+Agora, tudo no programa deve funcionar conforme o esperado. Vamos experimentar:
 
 <!-- manual-regeneration
 cd listings/ch02-guessing-game-tutorial/listing-02-05/
@@ -688,10 +572,7 @@ You guessed: 61
 You win!
 ```
 
-Awesome! With one tiny final tweak, we will finish the guessing game. Recall
-that the program is still printing the secret number. That worked well for
-testing, but it ruins the game. Let’s delete the `println!` that outputs the
-secret number. Listing 2-6 shows the final code.
+Incrível! Com um pequeno ajuste final, terminaremos o jogo de adivinhação. Lembre-se de que o programa ainda está imprimindo o número secreto. Isso funcionou bem para testes, mas estraga o jogo. Vamos excluir o `println!` que exibe o número secreto. A Listagem 2-6 mostra o código final.
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -703,15 +584,9 @@ secret number. Listing 2-6 shows the final code.
 
 At this point, you’ve successfully built the guessing game. Congratulations!
 
-## Summary
+## Resumo
 
-This project was a hands-on way to introduce you to many new Rust concepts:
-`let`, `match`, functions, the use of external crates, and more. In the next
-few chapters, you’ll learn about these concepts in more detail. Chapter 3
-covers concepts that most programming languages have, such as variables, data
-types, and functions, and shows how to use them in Rust. Chapter 4 explores
-ownership, a feature that makes Rust different from other languages. Chapter 5
-discusses structs and method syntax, and Chapter 6 explains how enums work.
+Este projeto foi uma forma prática de introduzi-lo a muitos novos conceitos do Rust: `let`, `match`, funções, o uso de crates externas e muito mais. Nos próximos capítulos, você aprenderá sobre esses conceitos com mais detalhes. O Capítulo 3 aborda conceitos que a maioria das linguagens de programação possui, como variáveis, tipos de dados e funções, e mostra como usá-los em Rust. O Capítulo 4 explora a propriedade, uma característica que torna o Rust diferente de outras linguagens. O Capítulo 5 discute structs e a sintaxe de métodos, e o Capítulo 6 explica como enums funcionam.
 
 [prelude]: ../std/prelude/index.html
 [variables-and-mutability]: ch03-01-variables-and-mutability.html#variables-and-mutability
