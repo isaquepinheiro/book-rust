@@ -82,7 +82,7 @@ fn match(needle: &str, haystack: &str) -> bool {
 }
 ```
 
-you’ll get this error:
+você receberá este erro:
 
 ```text
 error: expected identifier, found keyword `match`
