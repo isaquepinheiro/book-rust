@@ -4,60 +4,55 @@ A lista a seguir contém palavras-chave que são reservadas para uso atual ou fu
 
 [raw-identifiers]: #raw-identifiers
 
-### Keywords Currently in Use
+### Palavras-chave Atualmente em Uso
 
-The following is a list of keywords currently in use, with their functionality
-described.
+A seguir está uma lista de palavras-chave atualmente em uso, com suas funcionalidades descritas.
 
-* `as` - perform primitive casting, disambiguate the specific trait containing
-  an item, or rename items in `use` statements
-* `async` -  return a `Future` instead of blocking the current thread
-* `await` - suspend execution until the result of a `Future` is ready
-* `break` - exit a loop immediately
-* `const` - define constant items or constant raw pointers
-* `continue` - continue to the next loop iteration
-* `crate` - in a module path, refers to the crate root
-* `dyn` - dynamic dispatch to a trait object
-* `else` - fallback for `if` and `if let` control flow constructs
-* `enum` - define an enumeration
-* `extern` - link an external function or variable
-* `false` - Boolean false literal
-* `fn` - define a function or the function pointer type
-* `for` - loop over items from an iterator, implement a trait, or specify a
-  higher-ranked lifetime
-* `if` - branch based on the result of a conditional expression
-* `impl` - implement inherent or trait functionality
-* `in` - part of `for` loop syntax
-* `let` - bind a variable
-* `loop` - loop unconditionally
-* `match` - match a value to patterns
-* `mod` - define a module
-* `move` - make a closure take ownership of all its captures
-* `mut` - denote mutability in references, raw pointers, or pattern bindings
-* `pub` - denote public visibility in struct fields, `impl` blocks, or modules
-* `ref` - bind by reference
-* `return` - return from function
-* `Self` - a type alias for the type we are defining or implementing
-* `self` - method subject or current module
-* `static` - global variable or lifetime lasting the entire program execution
-* `struct` - define a structure
-* `super` - parent module of the current module
-* `trait` - define a trait
-* `true` - Boolean true literal
-* `type` - define a type alias or associated type
-* `union` - define a [union][union]<!-- ignore -->; is only a keyword when used
-  in a union declaration
-* `unsafe` - denote unsafe code, functions, traits, or implementations
-* `use` - bring symbols into scope
-* `where` - denote clauses that constrain a type
-* `while` - loop conditionally based on the result of an expression
+* `as` - realizar conversão primitiva, desambiguar o trait específico que contém um item, ou renomear itens em declarações `use`
+* `async` - retornar um `Future` em vez de bloquear a thread atual
+* `await` - suspender a execução até que o resultado de um `Future` esteja pronto
+* `break` - sair imediatamente de um loop
+* `const` - definir itens constantes ou ponteiros crus constantes
+* `continue` - continuar para a próxima iteração do loop
+* `crate` - em um caminho de módulo, refere-se à raiz da crate
+* `dyn` - despacho dinâmico para um objeto trait
+* `else` - fallback para construções de fluxo de controle `if` e `if let`
+* `enum` - definir uma enumeração
+* `extern` - linkar uma função ou variável externa
+* `false` - literal booleano `false`
+* `fn` - definir uma função ou o tipo de ponteiro de função
+* `for` - iterar sobre itens de um iterador, implementar um trait ou especificar um tempo de vida com ranking superior
+* `if` - ramificar com base no resultado de uma expressão condicional
+* `impl` - implementar funcionalidade inerente ou de trait
+* `in` - parte da sintaxe do loop `for`
+* `let` - vincular uma variável
+* `loop` - criar um loop incondicional
+* `match` - corresponder um valor a padrões
+* `mod` - definir um módulo
+* `move` - fazer com que um fechamento assuma a propriedade de todas as suas capturas
+* `mut` - denotar mutabilidade em referências, ponteiros crus ou vinculações de padrão
+* `pub` - denotar visibilidade pública em campos de estrutura, blocos `impl` ou módulos
+* `ref` - vincular por referência
+* `return` - retornar de uma função
+* `Self` - um alias de tipo para o tipo que estamos definindo ou implementando
+* `self` - sujeito do método ou módulo atual
+* `static` - variável global ou tempo de vida que dura a execução do programa inteiro
+* `struct` - definir uma estrutura
+* `super` - módulo pai do módulo atual
+* `trait` - definir um trait
+* `true` - literal booleano `true`
+* `type` - definir um alias de tipo ou tipo associado
+* `union` - definir uma [união][union]<!-- ignore -->; só é uma palavra-chave quando usada em uma declaração de união
+* `unsafe` - denotar código, funções, traits ou implementações inseguras
+* `use` - trazer símbolos para o escopo
+* `where` - denotar cláusulas que restringem um tipo
+* `while` - criar um loop condicional com base no resultado de uma expressão
 
 [union]: ../reference/items/unions.html
 
-### Keywords Reserved for Future Use
+### Palavras-chave Reservadas para Uso Futuro
 
-The following keywords do not yet have any functionality but are reserved by
-Rust for potential future use.
+As seguintes palavras-chave ainda não têm nenhuma funcionalidade, mas são reservadas pelo Rust para uso futuro potencial.
 
 * `abstract`
 * `become`
@@ -73,13 +68,11 @@ Rust for potential future use.
 * `virtual`
 * `yield`
 
-### Raw Identifiers
+### Identificadores Raw
 
-*Raw identifiers* are the syntax that lets you use keywords where they wouldn’t
-normally be allowed. You use a raw identifier by prefixing a keyword with `r#`.
+*Identificadores raw* são a sintaxe que permite que você use palavras-chave onde normalmente não seriam permitidas. Você usa um identificador raw prefixando uma palavra-chave com `r#`.
 
-For example, `match` is a keyword. If you try to compile the following function
-that uses `match` as its name:
+Por exemplo, `match` é uma palavra-chave. Se você tentar compilar a seguinte função que usa `match` como seu nome:
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -99,9 +92,7 @@ error: expected identifier, found keyword `match`
   |    ^^^^^ expected identifier, found keyword
 ```
 
-The error shows that you can’t use the keyword `match` as the function
-identifier. To use `match` as a function name, you need to use the raw
-identifier syntax, like this:
+O erro mostra que você não pode usar a palavra-chave `match` como identificador da função. Para usar `match` como nome de função, você precisa usar a sintaxe de identificador raw, como neste exemplo:
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -115,18 +106,8 @@ fn main() {
 }
 ```
 
-This code will compile without any errors. Note the `r#` prefix on the function
-name in its definition as well as where the function is called in `main`.
+Este código será compilado sem erros. Observe o prefixo `r#` no nome da função em sua definição, bem como onde a função é chamada em `main`.
 
-Raw identifiers allow you to use any word you choose as an identifier, even if
-that word happens to be a reserved keyword. This gives us more freedom to
-choose identifier names, as well as lets us integrate with programs written in
-a language where these words aren’t keywords. In addition, raw identifiers
-allow you to use libraries written in a different Rust edition than your crate
-uses. For example, `try` isn’t a keyword in the 2015 edition but is in the 2018
-edition. If you depend on a library that’s written using the 2015 edition and
-has a `try` function, you’ll need to use the raw identifier syntax, `r#try` in
-this case, to call that function from your 2018 edition code. See [Appendix
-E][appendix-e]<!-- ignore --> for more information on editions.
+Identificadores raw permitem que você use qualquer palavra que escolher como identificador, mesmo que essa palavra seja uma palavra-chave reservada. Isso nos dá mais liberdade para escolher nomes de identificadores e também nos permite integrar com programas escritos em uma linguagem onde essas palavras não são palavras-chave. Além disso, identificadores raw permitem que você use bibliotecas escritas em uma edição diferente do Rust do que a sua crate usa. Por exemplo, `try` não é uma palavra-chave na edição de 2015, mas é na edição de 2018. Se você depender de uma biblioteca escrita usando a edição de 2015 e ela tiver uma função `try`, você precisará usar a sintaxe de identificador raw, `r#try` neste caso, para chamar essa função do seu código da edição de 2018. Consulte [Apêndice E][apendice-e] para obter mais informações sobre edições.
 
 [appendix-e]: appendix-05-editions.html
