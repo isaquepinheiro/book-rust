@@ -1,16 +1,8 @@
-## Bringing Paths into Scope with the `use` Keyword
+## Trazendo Caminhos para o Escopo com a Palavra-chave `use`
 
-Having to write out the paths to call functions can feel inconvenient and
-repetitive. In Listing 7-7, whether we chose the absolute or relative path to
-the `add_to_waitlist` function, every time we wanted to call `add_to_waitlist`
-we had to specify `front_of_house` and `hosting` too. Fortunately, there’s a
-way to simplify this process: we can create a shortcut to a path with the `use`
-keyword once, and then use the shorter name everywhere else in the scope.
+Ter que escrever os caminhos para chamar funções pode parecer inconveniente e repetitivo. No Exemplo 7-7, independentemente de escolhermos o caminho absoluto ou relativo para a função `add_to_waitlist`, toda vez que quiséssemos chamar `add_to_waitlist`, tínhamos que especificar `front_of_house` e `hosting` também. Felizmente, há uma maneira de simplificar esse processo: podemos criar um atalho para um caminho com a palavra-chave `use` uma vez e, em seguida, usar o nome mais curto em todos os outros lugares no escopo.
 
-In Listing 7-11, we bring the `crate::front_of_house::hosting` module into the
-scope of the `eat_at_restaurant` function so we only have to specify
-`hosting::add_to_waitlist` to call the `add_to_waitlist` function in
-`eat_at_restaurant`.
+No Exemplo 7-11, trazemos o módulo `crate::front_of_house::hosting` para o escopo da função `eat_at_restaurant`, para que só precisemos especificar `hosting::add_to_waitlist` para chamar a função `add_to_waitlist` em `eat_at_restaurant`.
 
 <span class="filename">Filename: src/lib.rs</span>
 
@@ -18,19 +10,11 @@ scope of the `eat_at_restaurant` function so we only have to specify
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-11/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-11: Bringing a module into scope with
-`use`</span>
+<span class="caption">Exemplo 7-11: Trazendo um módulo para o escopo com `use`</span>
 
-Adding `use` and a path in a scope is similar to creating a symbolic link in
-the filesystem. By adding `use crate::front_of_house::hosting` in the crate
-root, `hosting` is now a valid name in that scope, just as though the `hosting`
-module had been defined in the crate root. Paths brought into scope with `use`
-also check privacy, like any other paths.
+Adicionar `use` e um caminho em um escopo é semelhante a criar um link simbólico no sistema de arquivos. Ao adicionar `use crate::front_of_house::hosting` na raiz da caixa, `hosting` agora é um nome válido nesse escopo, assim como se o módulo `hosting` tivesse sido definido na raiz da caixa. Os caminhos trazidos para o escopo com `use` também verificam a privacidade, assim como qualquer outro caminho.
 
-Note that `use` only creates the shortcut for the particular scope in which the
-`use` occurs. Listing 7-12 moves the `eat_at_restaurant` function into a new
-child module named `customer`, which is then a different scope than the `use`
-statement, so the function body won’t compile:
+Observe que `use` cria apenas o atalho para o escopo específico em que o `use` ocorre. O Exemplo 7-12 move a função `eat_at_restaurant` para um novo módulo filho chamado `customer`, que é então um escopo diferente do `use` statement, portanto o corpo da função não irá compilar:
 
 <span class="filename">Filename: src/lib.rs</span>
 
@@ -38,27 +22,19 @@ statement, so the function body won’t compile:
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-12/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-12: A `use` statement only applies in the scope
-it’s in</span>
+<span class="caption">Exemplo 7-12: Uma declaração `use` se aplica apenas no escopo em que está</span>
 
-The compiler error shows that the shortcut no longer applies within the
-`customer` module:
+O erro do compilador mostra que o atalho não se aplica mais ao módulo `customer`:
 
 ```console
 {{#include ../listings/ch07-managing-growing-projects/listing-07-12/output.txt}}
 ```
 
-Notice there’s also a warning that the `use` is no longer used in its scope! To
-fix this problem, move the `use` within the `customer` module too, or reference
-the shortcut in the parent module with `super::hosting` within the child
-`customer` module.
+Observe também um aviso de que o `use` não é mais usado em seu escopo! Para corrigir esse problema, mova o `use` para dentro do módulo `customer` também, ou faça referência ao atalho no módulo pai com `super::hosting` dentro do módulo filho `customer`.
 
-### Creating Idiomatic `use` Paths
+### Criando Caminhos `use` Idiomáticos
 
-In Listing 7-11, you might have wondered why we specified `use
-crate::front_of_house::hosting` and then called `hosting::add_to_waitlist` in
-`eat_at_restaurant` rather than specifying the `use` path all the way out to
-the `add_to_waitlist` function to achieve the same result, as in Listing 7-13.
+No exemplo 7-11, você pode ter se perguntado por que especificamos `use crate::front_of_house::hosting` e então chamamos `hosting::add_to_waitlist` em `eat_at_restaurant` em vez de especificar o caminho `use` até a função `add_to_waitlist` para alcançar o mesmo resultado, como no exemplo 7-13.
 
 <span class="filename">Filename: src/lib.rs</span>
 
@@ -66,21 +42,11 @@ the `add_to_waitlist` function to achieve the same result, as in Listing 7-13.
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-13/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-13: Bringing the `add_to_waitlist` function
-into scope with `use`, which is unidiomatic</span>
+<span class="caption">Exemplo 7-13: Tragendo a função `add_to_waitlist` para o escopo com `use`, o que é não idiomático</span>
 
-Although both Listing 7-11 and 7-13 accomplish the same task, Listing 7-11 is
-the idiomatic way to bring a function into scope with `use`. Bringing the
-function’s parent module into scope with `use` means we have to specify the
-parent module when calling the function. Specifying the parent module when
-calling the function makes it clear that the function isn’t locally defined
-while still minimizing repetition of the full path. The code in Listing 7-13 is
-unclear as to where `add_to_waitlist` is defined.
+Embora os Exemplos 7-11 e 7-13 realizem a mesma tarefa, o Exemplo 7-11 é a maneira idiomática de trazer uma função para o escopo com `use`. Trazer o módulo pai da função para o escopo com `use` significa que precisamos especificar o módulo pai ao chamar a função. Especificar o módulo pai ao chamar a função torna claro que a função não está definida localmente, mas ainda minimiza a repetição do caminho completo. O código no Exemplo 7-13 é confuso quanto aonde `add_to_waitlist` é definida.
 
-On the other hand, when bringing in structs, enums, and other items with `use`,
-it’s idiomatic to specify the full path. Listing 7-14 shows the idiomatic way
-to bring the standard library’s `HashMap` struct into the scope of a binary
-crate.
+Por outro lado, ao trazer structs, enums e outros itens com `use`, é idiomático especificar o caminho completo. O Exemplo 7-14 mostra a maneira idiomática de trazer a struct `HashMap` da biblioteca padrão para o escopo de uma crate binária.
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -88,16 +54,11 @@ crate.
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-14/src/main.rs}}
 ```
 
-<span class="caption">Listing 7-14: Bringing `HashMap` into scope in an
-idiomatic way</span>
+<span class="caption">Exemplo 7-14: Tragendo `HashMap` para o escopo de maneira idiomática</span>
 
-There’s no strong reason behind this idiom: it’s just the convention that has
-emerged, and folks have gotten used to reading and writing Rust code this way.
+Não há uma razão forte por trás desse idiom: é apenas a convenção que surgiu, e as pessoas se acostumaram a ler e escrever código Rust dessa maneira.
 
-The exception to this idiom is if we’re bringing two items with the same name
-into scope with `use` statements, because Rust doesn’t allow that. Listing 7-15
-shows how to bring two `Result` types into scope that have the same name but
-different parent modules and how to refer to them.
+A exceção a esse idiom é quando estamos trazendo dois itens com o mesmo nome para o escopo com declarações `use`, porque o Rust não permite isso. O Exemplo 7-15 mostra como trazer dois tipos `Result` para o escopo que têm o mesmo nome, mas módulos pais diferentes, e como fazer referência a eles.
 
 <span class="filename">Filename: src/lib.rs</span>
 
@@ -105,20 +66,13 @@ different parent modules and how to refer to them.
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-15/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 7-15: Bringing two types with the same name into
-the same scope requires using their parent modules.</span>
+<span class="caption">Exemplo 7-15: Trazer dois tipos com o mesmo nome para o mesmo escopo requer o uso de seus módulos pais.</span>
 
-As you can see, using the parent modules distinguishes the two `Result` types.
-If instead we specified `use std::fmt::Result` and `use std::io::Result`, we’d
-have two `Result` types in the same scope and Rust wouldn’t know which one we
-meant when we used `Result`.
+Como você pode ver, usar os módulos pais distingue os dois tipos `Result`. Se, em vez disso, especificássemos `use std::fmt::Result` e `use std::io::Result`, teríamos dois tipos `Result` no mesmo escopo e o Rust não saberia qual deles queríamos quando usássemos `Result`.
 
-### Providing New Names with the `as` Keyword
+### Fornecendo Novos Nomes com a Palavra-chave `as`
 
-There’s another solution to the problem of bringing two types of the same name
-into the same scope with `use`: after the path, we can specify `as` and a new
-local name, or *alias*, for the type. Listing 7-16 shows another way to write
-the code in Listing 7-15 by renaming one of the two `Result` types using `as`.
+Há outra solução para o problema de trazer dois tipos com o mesmo nome para o mesmo escopo com `use`: após o caminho, podemos especificar `as` e um novo nome local, ou *alias*, para o tipo. O Exemplo 7-16 mostra outra maneira de escrever o código do Exemplo 7-15, renomeando um dos dois tipos `Result` usando `as`.
 
 <span class="filename">Filename: src/lib.rs</span>
 
@@ -126,25 +80,15 @@ the code in Listing 7-15 by renaming one of the two `Result` types using `as`.
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-16/src/lib.rs:here}}
 ```
 
-<span class="caption">Listing 7-16: Renaming a type when it’s brought into
-scope with the `as` keyword</span>
+<span class="caption">Exemplo 7-16: Renomeando um tipo ao trazê-lo para o escopo com a palavra-chave `as`</span>
 
-In the second `use` statement, we chose the new name `IoResult` for the
-`std::io::Result` type, which won’t conflict with the `Result` from `std::fmt`
-that we’ve also brought into scope. Listing 7-15 and Listing 7-16 are
-considered idiomatic, so the choice is up to you!
+No segundo `use`, escolhemos o novo nome `IoResult` para o tipo `std::io::Result`, o que não entrará em conflito com o `Result` de `std::fmt` que também trouxemos para o escopo. O Exemplo 7-15 e o Exemplo 7-16 são considerados idiomáticos, então a escolha fica a seu critério!
 
-### Re-exporting Names with `pub use`
+### Re-exportando Nomes com `pub use`
 
-When we bring a name into scope with the `use` keyword, the name available in
-the new scope is private. To enable the code that calls our code to refer to
-that name as if it had been defined in that code’s scope, we can combine `pub`
-and `use`. This technique is called *re-exporting* because we’re bringing
-an item into scope but also making that item available for others to bring into
-their scope.
+Quando trazemos um nome para o escopo com a palavra-chave `use`, o nome disponível no novo escopo é privado. Para permitir que o código que chama nosso código se refira a esse nome como se tivesse sido definido no escopo desse código, podemos combinar `pub` e `use`. Essa técnica é chamada de *re-exportação* porque estamos trazendo um item para o escopo, mas também tornando esse item disponível para que outras pessoas o tragam para o escopo delas.
 
-Listing 7-17 shows the code in Listing 7-11 with `use` in the root module
-changed to `pub use`.
+O Exemplo 7-17 mostra o código do Exemplo 7-11 com `use` no módulo raiz alterado para `pub use`.
 
 <span class="filename">Filename: src/lib.rs</span>
 
@@ -152,32 +96,15 @@ changed to `pub use`.
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-17/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-17: Making a name available for any code to use
-from a new scope with `pub use`</span>
+<span class="caption">Exemplo 7-17: Tornando um nome disponível para qualquer código usar a partir de um novo escopo com `pub use`</span>
 
-Before this change, external code would have to call the `add_to_waitlist`
-function by using the path
-`restaurant::front_of_house::hosting::add_to_waitlist()`. Now that this `pub
-use` has re-exported the `hosting` module from the root module, external code
-can now use the path `restaurant::hosting::add_to_waitlist()` instead.
+Antes dessa mudança, o código externo teria que chamar a função `add_to_waitlist` usando o caminho `restaurant::front_of_house::hosting::add_to_waitlist()`. Agora que esse `pub use` reexportou o módulo `hosting` do módulo raiz, o código externo pode usar o caminho `restaurant::hosting::add_to_waitlist()` em vez disso.
 
-Re-exporting is useful when the internal structure of your code is different
-from how programmers calling your code would think about the domain. For
-example, in this restaurant metaphor, the people running the restaurant think
-about “front of house” and “back of house.” But customers visiting a restaurant
-probably won’t think about the parts of the restaurant in those terms. With
-`pub use`, we can write our code with one structure but expose a different
-structure. Doing so makes our library well organized for programmers working on
-the library and programmers calling the library. We’ll look at another example
-of `pub use` and how it affects your crate’s documentation in the [“Exporting a
-Convenient Public API with `pub use`”][ch14-pub-use]<!-- ignore --> section of
-Chapter 14.
+A reexportação é útil quando a estrutura interna do seu código é diferente da forma como os programadores que chamam o seu código pensariam sobre o domínio. Por exemplo, nesta metáfora de restaurante, as pessoas que administram o restaurante pensam em "front of house" e "back of house". Mas os clientes que visitam um restaurante provavelmente não pensarão nas partes do restaurante com esses termos. Com `pub use`, podemos escrever nosso código com uma estrutura, mas expor uma estrutura diferente. Fazê-lo organiza bem nossa biblioteca para programadores que trabalham na biblioteca e programadores que a chamam. Veremos outro exemplo de `pub use` e como ele afeta a documentação de sua crate na seção [“Exportando uma API Pública Conveniente com `pub use`”][ch14-pub-use] do Capítulo 14.
 
-### Using External Packages
+### Usando Pacotes Externos
 
-In Chapter 2, we programmed a guessing game project that used an external
-package called `rand` to get random numbers. To use `rand` in our project, we
-added this line to *Cargo.toml*:
+No Capítulo 2, programamos um projeto de jogo de adivinhação que usava um pacote externo chamado `rand` para obter números aleatórios. Para usar o `rand` em nosso projeto, adicionamos esta linha ao *Cargo.toml*:
 
 <!-- When updating the version of `rand` used, also update the version of
 `rand` used in these files so they all match:
@@ -191,44 +118,27 @@ added this line to *Cargo.toml*:
 {{#include ../listings/ch02-guessing-game-tutorial/listing-02-02/Cargo.toml:9:}}
 ```
 
-Adding `rand` as a dependency in *Cargo.toml* tells Cargo to download the
-`rand` package and any dependencies from [crates.io](https://crates.io/) and
-make `rand` available to our project.
+Adicionar `rand` como uma dependência em *Cargo.toml* diz ao Cargo para baixar o pacote `rand` e quaisquer dependências do [crates.io](https://crates.io/) e tornar o `rand` disponível para nosso projeto.
 
-Then, to bring `rand` definitions into the scope of our package, we added a
-`use` line starting with the name of the crate, `rand`, and listed the items
-we wanted to bring into scope. Recall that in the [“Generating a Random
-Number”][rand]<!-- ignore --> section in Chapter 2, we brought the `Rng` trait
-into scope and called the `rand::thread_rng` function:
+Em seguida, para trazer as definições do `rand` para o escopo de nosso pacote, adicionamos uma linha `use` começando com o nome da crate, `rand`, e listamos os itens que queríamos trazer para o escopo. Lembre-se de que na seção [“Generating a Random Number”][rand]<!-- ignore --> do Capítulo 2, trouxemos o trait `Rng` para o escopo e chamamos a função `rand::thread_rng`:
 
 ```rust,ignore
 {{#rustdoc_include ../listings/ch02-guessing-game-tutorial/listing-02-03/src/main.rs:ch07-04}}
 ```
 
-Members of the Rust community have made many packages available at
-[crates.io](https://crates.io/), and pulling any of them into your package
-involves these same steps: listing them in your package’s *Cargo.toml* file and
-using `use` to bring items from their crates into scope.
+Membros da comunidade Rust disponibilizaram muitos pacotes em [crates.io](https://crates.io/), e incorporar qualquer um deles em seu pacote envolve essas mesmas etapas: listá-los no arquivo *Cargo.toml* do seu pacote e usar `use` para trazer itens de suas crates para o escopo.
 
-Note that the standard `std` library is also a crate that’s external to our
-package. Because the standard library is shipped with the Rust language, we
-don’t need to change *Cargo.toml* to include `std`. But we do need to refer to
-it with `use` to bring items from there into our package’s scope. For example,
-with `HashMap` we would use this line:
+Observe que a biblioteca padrão `std` também é uma crate que está fora do nosso pacote. Como a biblioteca padrão é fornecida com a linguagem Rust, não precisamos alterar o *Cargo.toml* para incluir `std`. Mas precisamos nos referir a ela com `use` para trazer itens de lá para o escopo de nosso pacote. Por exemplo, com `HashMap`, usaríamos esta linha:
 
 ```rust
 use std::collections::HashMap;
 ```
 
-This is an absolute path starting with `std`, the name of the standard library
-crate.
+Este é um caminho absoluto que começa com `std`, o nome da crate da biblioteca padrão.
 
-### Using Nested Paths to Clean Up Large `use` Lists
+### Usando Caminhos Aninhados para Limpar Listas de `use` Grandes
 
-If we’re using multiple items defined in the same crate or same module,
-listing each item on its own line can take up a lot of vertical space in our
-files. For example, these two `use` statements we had in the Guessing Game in
-Listing 2-4 bring items from `std` into scope:
+Se estamos usando vários itens definidos na mesma crate ou no mesmo módulo, listar cada item em sua própria linha pode ocupar muito espaço vertical em nossos arquivos. Por exemplo, essas duas declarações `use` que tivemos no Jogo de Adivinhação no Exemplo 2-4 trazem itens de `std` para o escopo:
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -236,10 +146,7 @@ Listing 2-4 bring items from `std` into scope:
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/no-listing-01-use-std-unnested/src/main.rs:here}}
 ```
 
-Instead, we can use nested paths to bring the same items into scope in one
-line. We do this by specifying the common part of the path, followed by two
-colons, and then curly brackets around a list of the parts of the paths that
-differ, as shown in Listing 7-18.
+Em vez disso, podemos usar caminhos aninhados para trazer os mesmos itens para o escopo em uma única linha. Fazemos isso especificando a parte comum do caminho, seguida por dois dois pontos e, em seguida, chaves em torno de uma lista das partes dos caminhos que diferem, conforme mostrado no Exemplo 7-18.
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -247,17 +154,11 @@ differ, as shown in Listing 7-18.
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-18/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 7-18: Specifying a nested path to bring multiple
-items with the same prefix into scope</span>
+<span class="caption">Exemplo 7-18: Especificando um caminho aninhado para trazer vários itens com o mesmo prefixo para o escopo</span>
 
-In bigger programs, bringing many items into scope from the same crate or
-module using nested paths can reduce the number of separate `use` statements
-needed by a lot!
+Em programas maiores, trazer muitos itens para o escopo da mesma crate ou módulo usando caminhos aninhados pode reduzir significativamente o número de declarações `use` separadas necessárias!
 
-We can use a nested path at any level in a path, which is useful when combining
-two `use` statements that share a subpath. For example, Listing 7-19 shows two
-`use` statements: one that brings `std::io` into scope and one that brings
-`std::io::Write` into scope.
+Podemos usar um caminho aninhado em qualquer nível de um caminho, o que é útil ao combinar duas declarações `use` que compartilham um subcaminho. Por exemplo, o Exemplo 7-19 mostra duas declarações `use`: uma que traz `std::io` para o escopo e outra que traz `std::io::Write` para o escopo.
 
 <span class="filename">Filename: src/lib.rs</span>
 
@@ -268,9 +169,7 @@ two `use` statements that share a subpath. For example, Listing 7-19 shows two
 <span class="caption">Listing 7-19: Two `use` statements where one is a subpath
 of the other</span>
 
-The common part of these two paths is `std::io`, and that’s the complete first
-path. To merge these two paths into one `use` statement, we can use `self` in
-the nested path, as shown in Listing 7-20.
+A parte comum desses dois caminhos é `std::io`, e esse é o primeiro caminho completo. Para mesclar esses dois caminhos em uma única declaração `use`, podemos usar `self` no caminho aninhado, conforme mostrado no Exemplo 7-20.
 
 <span class="filename">Filename: src/lib.rs</span>
 
@@ -278,31 +177,21 @@ the nested path, as shown in Listing 7-20.
 {{#rustdoc_include ../listings/ch07-managing-growing-projects/listing-07-20/src/lib.rs}}
 ```
 
-<span class="caption">Listing 7-20: Combining the paths in Listing 7-19 into
-one `use` statement</span>
+<span class="caption">Exemplo 7-20: Combinando os caminhos do Exemplo 7-19 em uma única declaração `use`</span>
 
-This line brings `std::io` and `std::io::Write` into scope.
+Esta linha traz `std::io` e `std::io::Write` para o escopo.
 
-### The Glob Operator
+### O Operador Glob
 
-If we want to bring *all* public items defined in a path into scope, we can
-specify that path followed by the `*` glob operator:
+Se quisermos trazer *todos* os itens públicos definidos em um caminho para o escopo, podemos especificar esse caminho seguido pelo operador `*`.
 
 ```rust
 use std::collections::*;
 ```
 
-This `use` statement brings all public items defined in `std::collections` into
-the current scope. Be careful when using the glob operator! Glob can make it
-harder to tell what names are in scope and where a name used in your program
-was defined.
+Essa declaração `use` traz todos os itens públicos definidos em `std::collections` para o escopo atual. Tenha cuidado ao usar o operador glob! O uso do glob pode tornar mais difícil identificar quais nomes estão no escopo e de onde um nome usado em seu programa foi definido.
 
-The glob operator is often used when testing to bring everything under test
-into the `tests` module; we’ll talk about that in the [“How to Write
-Tests”][writing-tests]<!-- ignore --> section in Chapter 11. The glob operator
-is also sometimes used as part of the prelude pattern: see [the standard
-library documentation](../std/prelude/index.html#other-preludes)<!-- ignore -->
-for more information on that pattern.
+O operador glob é frequentemente usado ao testar para trazer tudo sob teste para o módulo `tests`; falaremos sobre isso na seção [“Como Escrever Testes”][writing-tests]<!-- ignore --> no Capítulo 11. O operador glob também é às vezes usado como parte do padrão de prelude: consulte [a documentação da biblioteca padrão](../std/prelude/index.html#other-preludes)<!-- ignore --> para obter mais informações sobre esse padrão.
 
 [ch14-pub-use]: ch14-02-publishing-to-crates-io.html#exporting-a-convenient-public-api-with-pub-use
 [rand]: ch02-00-guessing-game-tutorial.html#generating-a-random-number
