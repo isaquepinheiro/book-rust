@@ -1,11 +1,3 @@
-# Enums and Pattern Matching
+# Enumerações e Correspondência de Padrões
 
-In this chapter, we’ll look at *enumerations*, also referred to as *enums*.
-Enums allow you to define a type by enumerating its possible *variants*. First
-we’ll define and use an enum to show how an enum can encode meaning along with
-data. Next, we’ll explore a particularly useful enum, called `Option`, which
-expresses that a value can be either something or nothing. Then we’ll look at
-how pattern matching in the `match` expression makes it easy to run different
-code for different values of an enum. Finally, we’ll cover how the `if let`
-construct is another convenient and concise idiom available to handle enums in
-your code.
+Neste capítulo, vamos examinar *enumerações*, também conhecidas como *enums*. Enums permitem que você defina um tipo enumerando suas possíveis *variantes*. Primeiro, definiremos e usaremos uma enumeração para mostrar como uma enumeração pode codificar significado juntamente com dados. Em seguida, exploraremos uma enumeração particularmente útil, chamada `Option`, que expressa que um valor pode ser algo ou nada. Depois, veremos como a correspondência de padrões na expressão `match` facilita a execução de código diferente para valores diferentes de uma enumeração. Por fim, abordaremos como a construção `if let` é outra forma conveniente e concisa disponível para lidar com enumerações em seu código.
