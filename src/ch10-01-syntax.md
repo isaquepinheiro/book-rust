@@ -1,20 +1,20 @@
-## Generic Data Types
+## Tipos de Dados Genéricos
 
-We use generics to create definitions for items like function signatures or
-structs, which we can then use with many different concrete data types. Let’s
-first look at how to define functions, structs, enums, and methods using
-generics. Then we’ll discuss how generics affect code performance.
+Usamos genéricos para criar definições de itens, como assinaturas de função ou
+estruturas, que podemos, em seguida, usar com muitos tipos de dados concretos diferentes. Vamos
+primeiro analisar como definir funções, estruturas, enumerações e métodos usando
+genéricos. Em seguida, discutiremos como os genéricos afetam o desempenho do código.
 
-### In Function Definitions
+### Em Definições de Função
 
-When defining a function that uses generics, we place the generics in the
-signature of the function where we would usually specify the data types of the
-parameters and return value. Doing so makes our code more flexible and provides
-more functionality to callers of our function while preventing code duplication.
+Ao definir uma função que usa genéricos, colocamos os genéricos na
+assinatura da função, onde normalmente especificaríamos os tipos de dados dos
+parâmetros e o valor de retorno. Fazê-lo torna nosso código mais flexível e fornece
+mais funcionalidade aos chamadores de nossa função, ao mesmo tempo que evita a duplicação de código.
 
-Continuing with our `largest` function, Listing 10-4 shows two functions that
-both find the largest value in a slice. We'll then combine these into a single
-function that uses generics.
+Continuando com nossa função `maior`, o Exemplo 10-4 mostra duas funções que
+encontram o maior valor em uma fatia. Em seguida, combinaremos essas funções em uma única
+função que usa genéricos.
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -22,8 +22,8 @@ function that uses generics.
 {{#rustdoc_include ../listings/ch10-generic-types-traits-and-lifetimes/listing-10-04/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 10-4: Two functions that differ only in their
-names and the types in their signatures</span>
+<span class="caption">Exemplo 10-4: Duas funções que diferem apenas em seus
+nomes e nos tipos em suas assinaturas</span>
 
 The `largest_i32` function is the one we extracted in Listing 10-3 that finds
 the largest `i32` in a slice. The `largest_char` function finds the largest

@@ -1,25 +1,13 @@
-# Common Collections
+# Coleções Comuns
 
-Rust’s standard library includes a number of very useful data structures called
-*collections*. Most other data types represent one specific value, but
-collections can contain multiple values. Unlike the built-in array and tuple
-types, the data these collections point to is stored on the heap, which means
-the amount of data does not need to be known at compile time and can grow or
-shrink as the program runs. Each kind of collection has different capabilities
-and costs, and choosing an appropriate one for your current situation is a
-skill you’ll develop over time. In this chapter, we’ll discuss three
-collections that are used very often in Rust programs:
+A biblioteca padrão do Rust inclui uma série de estruturas de dados muito úteis chamadas *coleções*. A maioria dos outros tipos de dados representa um valor específico, mas as coleções podem conter vários valores. Ao contrário dos tipos de array e tupla incorporados, os dados apontados por essas coleções são armazenados no heap, o que significa que a quantidade de dados não precisa ser conhecida em tempo de compilação e pode crescer ou encolher à medida que o programa é executado. Cada tipo de coleção tem capacidades e custos diferentes, e escolher a adequada para a situação atual é uma habilidade que você desenvolverá ao longo do tempo. Neste capítulo, discutiremos três coleções que são usadas com muita frequência em programas Rust:
 
-* A *vector* allows you to store a variable number of values next to each other.
-* A *string* is a collection of characters. We’ve mentioned the `String` type
-  previously, but in this chapter we’ll talk about it in depth.
-* A *hash map* allows you to associate a value with a particular key. It’s a
-  particular implementation of the more general data structure called a *map*.
+* Um *vetor* permite que você armazene um número variável de valores um ao lado do outro.
+* Uma *string* é uma coleção de caracteres. Já mencionamos o tipo `String` anteriormente, mas neste capítulo falaremos sobre ele em profundidade.
+* Um *hash map* permite que você associe um valor a uma chave específica. É uma implementação específica da estrutura de dados mais geral chamada *mapa*.
 
-To learn about the other kinds of collections provided by the standard library,
-see [the documentation][collections].
+Para aprender sobre outros tipos de coleções fornecidos pela biblioteca padrão, consulte [a documentação][collections].
 
-We’ll discuss how to create and update vectors, strings, and hash maps, as well
-as what makes each special.
+Discutiremos como criar e atualizar vetores, strings e hash maps, além de explicar o que torna cada um deles especial.
 
 [collections]: ../std/collections/index.html

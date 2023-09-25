@@ -1,251 +1,196 @@
-## Storing Lists of Values with Vectors
+## Armazenando Listas de Valores com Vetores
 
-The first collection type we’ll look at is `Vec<T>`, also known as a *vector*.
-Vectors allow you to store more than one value in a single data structure that
-puts all the values next to each other in memory. Vectors can only store values
-of the same type. They are useful when you have a list of items, such as the
-lines of text in a file or the prices of items in a shopping cart.
+O primeiro tipo de coleção que vamos analisar é `Vec<T>`, também conhecido como um *vetor*.
+Vetores permitem que você armazene mais de um valor em uma única estrutura de dados que
+coloca todos os valores lado a lado na memória. Vetores só podem armazenar valores
+do mesmo tipo. Eles são úteis quando você tem uma lista de itens, como os
+linhas de texto em um arquivo ou os preços de itens em um carrinho de compras.
 
-### Creating a New Vector
+### Criando um Novo Vetor
 
-To create a new empty vector, we call the `Vec::new` function, as shown in
-Listing 8-1.
+Para criar um novo vetor vazio, chamamos a função `Vec::new`, conforme mostrado em
+Listagem 8-1.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-01/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-1: Creating a new, empty vector to hold values
-of type `i32`</span>
+<span class="caption">Listagem 8-1: Criando um novo vetor vazio para armazenar valores
+do tipo `i32`</span>
 
-Note that we added a type annotation here. Because we aren’t inserting any
-values into this vector, Rust doesn’t know what kind of elements we intend to
-store. This is an important point. Vectors are implemented using generics;
-we’ll cover how to use generics with your own types in Chapter 10. For now,
-know that the `Vec<T>` type provided by the standard library can hold any type.
-When we create a vector to hold a specific type, we can specify the type within
-angle brackets. In Listing 8-1, we’ve told Rust that the `Vec<T>` in `v` will
-hold elements of the `i32` type.
+Observe que adicionamos uma anotação de tipo aqui. Como não estamos inserindo nenhum
+valor neste vetor, o Rust não sabe que tipo de elementos pretendemos
+armazenar. Isso é um ponto importante. Vetores são implementados usando genéricos;
+vamos abordar como usar genéricos com seus próprios tipos no Capítulo 10. Por enquanto,
+saiba que o tipo `Vec<T>` fornecido pela biblioteca padrão pode conter qualquer tipo.
+Quando criamos um vetor para armazenar um tipo específico, podemos especificar o tipo entre
+colchetes angulares. Na Listagem 8-1, dissemos ao Rust que o `Vec<T>` em `v`
+conterá elementos do tipo `i32`.
 
-More often, you’ll create a `Vec<T>` with initial values and Rust will infer
-the type of value you want to store, so you rarely need to do this type
-annotation. Rust conveniently provides the `vec!` macro, which will create a
-new vector that holds the values you give it. Listing 8-2 creates a new
-`Vec<i32>` that holds the values `1`, `2`, and `3`. The integer type is `i32`
-because that’s the default integer type, as we discussed in the [“Data
-Types”][data-types]<!-- ignore --> section of Chapter 3.
+Na maioria das vezes, você criará um `Vec<T>` com valores iniciais e o Rust inferirá
+o tipo de valor que você deseja armazenar, então você raramente precisa fazer esta anotação de tipo. O Rust convenientemente fornece a macro `vec!`, que criará um
+novo vetor que contém os valores que você lhe der. A Listagem 8-2 cria um novo
+`Vec<i32>` que contém os valores `1`, `2` e `3`. O tipo inteiro é `i32`
+porque esse é o tipo inteiro padrão, como discutimos na seção ["Tipos de Dados"][data-types] do Capítulo 3.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-02/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-2: Creating a new vector containing
-values</span>
+<span class="caption">Listagem 8-2: Criando um novo vetor contendo valores</span>
 
-Because we’ve given initial `i32` values, Rust can infer that the type of `v`
-is `Vec<i32>`, and the type annotation isn’t necessary. Next, we’ll look at how
-to modify a vector.
+Como fornecemos valores iniciais do tipo `i32`, o Rust pode inferir que o tipo de `v`
+é `Vec<i32>`, e a anotação de tipo não é necessária. Em seguida, veremos como
+modificar um vetor.
 
-### Updating a Vector
+### Atualizando um Vetor
 
-To create a vector and then add elements to it, we can use the `push` method,
-as shown in Listing 8-3.
+Para criar um vetor e depois adicionar elementos a ele, podemos usar o método `push`,
+conforme mostrado na Listagem 8-3.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-03/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-3: Using the `push` method to add values to a
-vector</span>
+<span class="caption">Listagem 8-3: Usando o método `push` para adicionar valores a um
+vetor</span>
 
-As with any variable, if we want to be able to change its value, we need to
-make it mutable using the `mut` keyword, as discussed in Chapter 3. The numbers
-we place inside are all of type `i32`, and Rust infers this from the data, so
-we don’t need the `Vec<i32>` annotation.
+Como acontece com qualquer variável, se quisermos ser capazes de alterar seu valor, precisamos
+torná-la mutável usando a palavra-chave `mut`, conforme discutido no Capítulo 3. Os números
+que colocamos dentro são todos do tipo `i32`, e o Rust infere isso a partir dos dados, então
+não precisamos da anotação `Vec<i32>`.
 
-### Reading Elements of Vectors
+### Lendo Elementos de Vetores
 
-There are two ways to reference a value stored in a vector: via indexing or
-using the `get` method. In the following examples, we’ve annotated the types of
-the values that are returned from these functions for extra clarity.
+Existem duas maneiras de referenciar um valor armazenado em um vetor: por meio de indexação ou
+usando o método `get`. Nos exemplos a seguir, anotamos os tipos dos valores que são retornados por essas funções para maior clareza.
 
-Listing 8-4 shows both methods of accessing a value in a vector, with indexing
-syntax and the `get` method.
+A Listagem 8-4 mostra ambos os métodos de acesso a um valor em um vetor, com sintaxe de indexação e o método `get`.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-04/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-4: Using indexing syntax or the `get` method to
-access an item in a vector</span>
+<span class="caption">Listagem 8-4: Usando a sintaxe de indexação ou o método `get` para
+acessar um item em um vetor</span>
 
-Note a few details here. We use the index value of `2` to get the third element
-because vectors are indexed by number, starting at zero. Using `&` and `[]`
-gives us a reference to the element at the index value. When we use the `get`
-method with the index passed as an argument, we get an `Option<&T>` that we can
-use with `match`.
+Observe alguns detalhes aqui. Usamos o valor do índice `2` para obter o terceiro elemento
+porque os vetores são indexados por número, começando em zero. Usar `&` e `[]`
+nos dá uma referência ao elemento no valor do índice. Quando usamos o método `get` com o índice passado como argumento, obtemos um `Option<&T>` que podemos
+usar com `match`.
 
-The reason Rust provides these two ways to reference an element is so you can
-choose how the program behaves when you try to use an index value outside the
-range of existing elements. As an example, let’s see what happens when we have
-a vector of five elements and then we try to access an element at index 100
-with each technique, as shown in Listing 8-5.
+A razão pela qual o Rust fornece essas duas maneiras de referenciar um elemento é para que você possa
+escolher como o programa se comporta quando você tenta usar um valor de índice fora do
+intervalo dos elementos existentes. Como exemplo, vejamos o que acontece quando temos
+um vetor com cinco elementos e, em seguida, tentamos acessar um elemento no índice 100
+com cada técnica, conforme mostrado na Listagem 8-5.
 
 ```rust,should_panic,panics
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-05/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-5: Attempting to access the element at index
-100 in a vector containing five elements</span>
+<span class="caption">Listagem 8-5: Tentativa de acessar o elemento no índice
+100 em um vetor contendo cinco elementos</span>
 
-When we run this code, the first `[]` method will cause the program to panic
-because it references a nonexistent element. This method is best used when you
-want your program to crash if there’s an attempt to access an element past the
-end of the vector.
+Quando executamos este código, o primeiro método `[]` fará com que o programa entre em pânico
+porque faz referência a um elemento inexistente. Este método é melhor usado quando você
+deseja que seu programa falhe se houver uma tentativa de acessar um elemento após o final do vetor.
 
-When the `get` method is passed an index that is outside the vector, it returns
-`None` without panicking. You would use this method if accessing an element
-beyond the range of the vector may happen occasionally under normal
-circumstances. Your code will then have logic to handle having either
-`Some(&element)` or `None`, as discussed in Chapter 6. For example, the index
-could be coming from a person entering a number. If they accidentally enter a
-number that’s too large and the program gets a `None` value, you could tell the
-user how many items are in the current vector and give them another chance to
-enter a valid value. That would be more user-friendly than crashing the program
-due to a typo!
+Quando o método `get` recebe um índice que está fora do vetor, ele retorna
+`None` sem entrar em pânico. Você usaria este método se acessar um elemento
+além do alcance do vetor puder acontecer ocasionalmente em circunstâncias normais.
+Seu código então terá lógica para lidar com ter `Some(&element)` ou `None`,
+conforme discutido no Capítulo 6. Por exemplo, o índice poderia vir de uma pessoa inserindo um número. Se eles acidentalmente inserirem um número muito grande e o programa receber um valor `None`, você poderia informar ao usuário quantos itens estão no vetor atual e dar a eles outra chance de inserir um valor válido. Isso seria mais amigável ao usuário do que fazer o programa travar devido a um erro de digitação!
 
-When the program has a valid reference, the borrow checker enforces the
-ownership and borrowing rules (covered in Chapter 4) to ensure this reference
-and any other references to the contents of the vector remain valid. Recall the
-rule that states you can’t have mutable and immutable references in the same
-scope. That rule applies in Listing 8-6, where we hold an immutable reference
-to the first element in a vector and try to add an element to the end. This
-program won’t work if we also try to refer to that element later in the
-function:
+Quando o programa tem uma referência válida, o verificador de empréstimo (coberto no Capítulo 4) aplica as regras de propriedade e empréstimo para garantir que essa referência e qualquer outra referência ao conteúdo do vetor permaneçam válidas. Lembre-se da regra que diz que você não pode ter referências mutáveis e imutáveis no mesmo escopo. Essa regra se aplica na Listagem 8-6, onde temos uma referência imutável ao primeiro elemento em um vetor e tentamos adicionar um elemento ao final. Este programa não funcionará se também tentarmos nos referir a esse elemento posteriormente na função:
 
 
 ```rust,ignore,does_not_compile
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-06/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-6: Attempting to add an element to a vector
-while holding a reference to an item</span>
+<span class="caption">Listagem 8-6: Tentativa de adicionar um elemento a um vetor
+enquanto se mantém uma referência a um item</span>
 
-Compiling this code will result in this error:
+Compilar este código resultará neste erro:
 
 
 ```console
 {{#include ../listings/ch08-common-collections/listing-08-06/output.txt}}
 ```
 
-The code in Listing 8-6 might look like it should work: why should a reference
-to the first element care about changes at the end of the vector? This error is
-due to the way vectors work: because vectors put the values next to each other
-in memory, adding a new element onto the end of the vector might require
-allocating new memory and copying the old elements to the new space, if there
-isn’t enough room to put all the elements next to each other where the vector
-is currently stored. In that case, the reference to the first element would be
-pointing to deallocated memory. The borrowing rules prevent programs from
-ending up in that situation.
+O código na Listagem 8-6 pode parecer que deveria funcionar: por que uma referência
+ao primeiro elemento se importaria com mudanças no final do vetor? Este erro ocorre
+devido à forma como os vetores funcionam: porque os vetores colocam os valores lado a lado
+na memória, adicionar um novo elemento ao final do vetor pode exigir
+alocar nova memória e copiar os elementos antigos para o novo espaço, se não houver espaço suficiente para colocar todos os elementos lado a lado onde o vetor
+está atualmente armazenado. Nesse caso, a referência ao primeiro elemento estaria
+apontando para a memória desalocada. As regras de empréstimo impedem que os programas
+acabem nessa situação.
 
-> Note: For more on the implementation details of the `Vec<T>` type, see [“The
-> Rustonomicon”][nomicon].
+> Nota: Para obter mais informações sobre os detalhes de implementação do tipo `Vec<T>`, consulte ["The Rustonomicon"][nomicon].
 
-### Iterating over the Values in a Vector
+### Iterando sobre os Valores em um Vetor
 
-To access each element in a vector in turn, we would iterate through all of the
-elements rather than use indices to access one at a time. Listing 8-7 shows how
-to use a `for` loop to get immutable references to each element in a vector of
-`i32` values and print them.
+Para acessar cada elemento em um vetor sequencialmente, iteramos por todos os
+elementos em vez de usar índices para acessá-los individualmente. A Listagem 8-7 mostra como
+usar um loop `for` para obter referências imutáveis a cada elemento em um vetor de
+valores `i32` e imprimi-los.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-07/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-7: Printing each element in a vector by
-iterating over the elements using a `for` loop</span>
+<span class="caption">Listagem 8-7: Imprimindo cada elemento em um vetor ao
+iterar sobre os elementos usando um loop `for`</span>
 
-We can also iterate over mutable references to each element in a mutable vector
-in order to make changes to all the elements. The `for` loop in Listing 8-8
-will add `50` to each element.
+Também podemos iterar sobre referências mutáveis a cada elemento em um vetor mutável
+para fazer alterações em todos os elementos. O loop `for` na Listagem 8-8
+adicionará `50` a cada elemento.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-08/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-8: Iterating over mutable references to
-elements in a vector</span>
+<span class="caption">Listagem 8-8: Iterando sobre referências mutáveis aos
+elementos em um vetor</span>
 
-To change the value that the mutable reference refers to, we have to use the
-`*` dereference operator to get to the value in `i` before we can use the `+=`
-operator. We’ll talk more about the dereference operator in the [“Following the
-Pointer to the Value with the Dereference Operator”][deref]<!-- ignore -->
-section of Chapter 15.
+Para alterar o valor ao qual a referência mutável se refere, precisamos usar o operador de desreferência `*` para acessar o valor em `i` antes de usar o operador `+=`. Falaremos mais sobre o operador de desreferência na seção ["Seguindo o Ponteiro até o Valor com o Operador de Desreferência"][deref] do Capítulo 15.
 
-Iterating over a vector, whether immutably or mutably, is safe because of the
-borrow checker's rules. If we attempted to insert or remove items in the `for`
-loop bodies in Listing 8-7 and Listing 8-8, we would get a compiler error
-similar to the one we got with the code in Listing 8-6. The reference to the
-vector that the `for` loop holds prevents simultaneous modification of the
-whole vector.
+Iterar sobre um vetor, seja de forma imutável ou mutável, é seguro devido às regras do verificador de empréstimo. Se tentássemos inserir ou remover itens nos corpos dos loops `for` nas Listagens 8-7 e 8-8, receberíamos um erro do compilador semelhante ao que obtivemos com o código na Listagem 8-6. A referência ao vetor que o loop `for` mantém impede a modificação simultânea de todo o vetor.
 
-### Using an Enum to Store Multiple Types
+### Usando um Enum para Armazenar Múltiplos Tipos
 
-Vectors can only store values that are the same type. This can be inconvenient;
-there are definitely use cases for needing to store a list of items of
-different types. Fortunately, the variants of an enum are defined under the
-same enum type, so when we need one type to represent elements of different
-types, we can define and use an enum!
+Os vetores só podem armazenar valores do mesmo tipo. Isso pode ser inconveniente; há definitivamente casos de uso em que precisamos armazenar uma lista de itens de diferentes tipos. Felizmente, as variantes de um enum são definidas sob o mesmo tipo de enum, portanto, quando precisamos que um tipo represente elementos de tipos diferentes, podemos definir e usar um enum!
 
-For example, say we want to get values from a row in a spreadsheet in which
-some of the columns in the row contain integers, some floating-point numbers,
-and some strings. We can define an enum whose variants will hold the different
-value types, and all the enum variants will be considered the same type: that
-of the enum. Then we can create a vector to hold that enum and so, ultimately,
-holds different types. We’ve demonstrated this in Listing 8-9.
+Por exemplo, digamos que queremos obter valores de uma linha em uma planilha em que algumas das colunas na linha contêm inteiros, alguns números de ponto flutuante e algumas strings. Podemos definir um enum cujas variantes irão conter os diferentes tipos de valor, e todas as variantes do enum serão consideradas do mesmo tipo: o tipo do enum. Em seguida, podemos criar um vetor para armazenar esse enum e, assim, em última análise, armazenar diferentes tipos. Demonstramos isso no Exemplo 8-9.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-09/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-9: Defining an `enum` to store values of
-different types in one vector</span>
+<span class="caption">Exemplo 8-9: Definindo um `enum` para armazenar valores de
+diferentes tipos em um único vetor</span>
 
-Rust needs to know what types will be in the vector at compile time so it knows
-exactly how much memory on the heap will be needed to store each element. We
-must also be explicit about what types are allowed in this vector. If Rust
-allowed a vector to hold any type, there would be a chance that one or more of
-the types would cause errors with the operations performed on the elements of
-the vector. Using an enum plus a `match` expression means that Rust will ensure
-at compile time that every possible case is handled, as discussed in Chapter 6.
+Rust precisa saber quais tipos estarão no vetor em tempo de compilação para que saiba exatamente quanto de memória na pilha (heap) será necessário para armazenar cada elemento. Também devemos ser explícitos sobre quais tipos são permitidos neste vetor. Se o Rust permitisse que um vetor armazenasse qualquer tipo, haveria uma chance de que um ou mais dos tipos causassem erros nas operações realizadas nos elementos do vetor. Usar um enum junto com uma expressão `match` significa que o Rust garantirá em tempo de compilação que todos os casos possíveis sejam tratados, como discutido no Capítulo 6.
 
-If you don’t know the exhaustive set of types a program will get at runtime to
-store in a vector, the enum technique won’t work. Instead, you can use a trait
-object, which we’ll cover in Chapter 17.
+Se você não conhece o conjunto exaustivo de tipos que um programa receberá em tempo de execução para armazenar em um vetor, a técnica do enum não funcionará. Em vez disso, você pode usar um objeto de trait, o qual abordaremos no Capítulo 17.
 
-Now that we’ve discussed some of the most common ways to use vectors, be sure
-to review [the API documentation][vec-api]<!-- ignore --> for all the many
-useful methods defined on `Vec<T>` by the standard library. For example, in
-addition to `push`, a `pop` method removes and returns the last element.
+Agora que discutimos algumas das formas mais comuns de usar vetores, certifique-se de revisar [a documentação da API][vec-api]<!-- ignore --> para todos os muitos métodos úteis definidos em `Vec<T>` pela biblioteca padrão. Por exemplo, além do método `push`, um método `pop` remove e retorna o último elemento.
 
-### Dropping a Vector Drops Its Elements
+### Descartar um Vetor Descarta Seus Elementos
 
-Like any other `struct`, a vector is freed when it goes out of scope, as
-annotated in Listing 8-10.
+Assim como qualquer outra `struct`, um vetor é liberado quando sai do escopo, como anotado no Exemplo 8-10.
 
 ```rust
 {{#rustdoc_include ../listings/ch08-common-collections/listing-08-10/src/main.rs:here}}
 ```
 
-<span class="caption">Listing 8-10: Showing where the vector and its elements
-are dropped</span>
+<span class="caption">Exemplo 8-10: Mostrando onde o vetor e seus elementos são descartados</span>
 
-When the vector gets dropped, all of its contents are also dropped, meaning the
-integers it holds will be cleaned up. The borrow checker ensures that any
-references to contents of a vector are only used while the vector itself is
-valid.
+Quando o vetor é descartado, todo o seu conteúdo também é descartado, o que significa que os inteiros que ele contém serão limpos. O verificador de empréstimos (borrow checker) garante que quaisquer referências aos conteúdos de um vetor sejam usadas apenas enquanto o vetor em si estiver válido.
 
-Let’s move on to the next collection type: `String`!
+Vamos seguir em frente para o próximo tipo de coleção: `String`!
 
 [data-types]: ch03-02-data-types.html#data-types
 [nomicon]: ../nomicon/vec/vec.html
